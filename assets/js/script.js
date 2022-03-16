@@ -129,3 +129,65 @@ let displayWeather = function(weather, searchCity){
         });
     });
 };
+
+let displayget5Day = function(weather){
+    forecastContainerEl.textContent = ""
+    forecastTitle.textContent = "5-Day Forecast:";
+
+    let forecast = weather.list;
+        for(let i=5; i < forecast.length; i=i+8){
+       let dailyForecast = forecast[i];
+    console.log(dailyForecast)
+       
+       let forecastEl=document.createElement("div");
+       forecastEl.classList = "card bg-primary text-light m-2";
+     
+       let forecastDate = document.createElement("h5")
+       forecastDate.textContent= moment.unix(dailyForecast.dt).format("MMM D, YYYY");
+       forecastDate.classList = "card-header text-center"
+       forecastEl.appendChild(forecastDate);
+      
+       let weatherIcon = document.createElement("img")
+       weatherIcon.classList = "card-body text-center";
+       weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`);  
+
+       forecastEl.appendChild(weatherIcon);
+       
+       let forecastTempEl=document.createElement("span");
+       forecastTempEl.classList = "card-body text-center";
+       forecastTempEl.textContent = dailyForecast.main.temp + " °F";
+
+        forecastEl.appendChild(forecastTempEl);
+
+       let forecastHumEl=document.createElement("span");
+       forecastHumEl.classList = "card-body text-center";
+       forecastHumEl.textContent = dailyForecast.main.humidity + "  %";
+
+        forecastEl.appendChild(forecastHumEl);
+
+        forecastContainerEl.appendChild(forecastEl);
+    }
+
+}
+
+let pastSearch = function(pastSearch){
+
+    pastSearchEl = document.createElement("button");
+    pastSearchEl.textContent = pastSearch;
+    pastSearchEl.classList = "d-flex w-100 btn-light border p-2";
+    pastSearchEl.setAttribute("data-city",pastSearch)
+    pastSearchEl.setAttribute("type", "submit");
+
+    pastSearchButtonEl.prepend(pastSearchEl);
+}
+
+let pastSearchHandler = function(event){
+    let city = event.target.getAttribute("data-city")
+    if(city){
+        getCityWeather(city);
+        get5Day(city);
+    }
+}
+
+cityFormEl.addEventListener("submit", formSumbitHandler);
+pastSearchButtonEl.addEventListener("click", pastSearchHandler);
