@@ -1,5 +1,5 @@
 let cities = [];
-let apiKey = "aa56e812832ff057049df2cef78bff07";
+
 let cityFormEl=document.querySelector("#city-search-form");
 let cityInputEl=document.querySelector("#city");
 let weatherContainerEl=document.querySelector("#current-weather-container");
@@ -28,7 +28,7 @@ let saveSearch = function(){
 };
 
 let getCityWeather = function(city){
-    apiKey = "aa56e812832ff057049df2cef78bff07";
+    let apiKey = "aa56e812832ff057049df2cef78bff07";
     let apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
 
     fetch(apiURL)
@@ -83,7 +83,7 @@ let displayWeather = function(weather, searchCity){
  }
  
  let getUvIndex = function(lat,lon){
-     apiKey = "aa56e812832ff057049df2cef78bff07";
+     let apiKey = "aa56e812832ff057049df2cef78bff07";
      let apiURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`
      fetch(apiURL)
      .then(function(response){
@@ -117,3 +117,15 @@ let displayWeather = function(weather, searchCity){
     
      weatherContainerEl.appendChild(uvIndexEl);
  }
+
+ let get5Day = function(city){
+    let apiKey = "aa56e812832ff057049df2cef78bff07";
+    let apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`
+
+    fetch(apiURL)
+    .then(function(response){
+        response.json().then(function(data){
+           displayget5Day(data);
+        });
+    });
+};
